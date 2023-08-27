@@ -22,6 +22,6 @@ class SplashScreen : AppCompatActivity() {
             val intent = Intent(this, MainActivity::class.java )
             startActivity(intent)
             finish()
-        },3000) //Время задержки 3 секунды.
+        },1000) //TODO:Время задержки 3 секунды. ПОМЕНЯТЬ!
     }
 }
