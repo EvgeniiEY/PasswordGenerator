@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">PasswordGenerator</string>
+    <string name="app_name_splash_title">Password Generator</string>
+    <string name="generate_tv">Click on Generate</string>
+    <string name="copy_btn">COPY</string>
+    <string name="save_btn">SAVE</string>
+    <string name="choose_the_password_content">Chose the password Content:</string>
+    <string name="lower_case_checkbox">Lower Case</string>
+    <string name="upper_case_checkbox">Upper Case</string>
+    <string name="numeric_value_checkbox">Numeric Value</string>
+    <string name="special_chars_checkbox">Special Chars</string>
+    <string name="password_size">Password Size</string>
+    <string name="generate_btn">GENERATE</string>
+</resources>

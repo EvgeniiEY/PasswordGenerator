@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/password_generate_tv"
+        android:layout_width="324dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="160dp"
+        android:text="@string/generate_tv"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/password_generate_title_tv"
+        android:layout_width="152dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="44dp"
+        android:gravity="center"
+        android:text="@string/choose_the_password_content"
+        android:textAlignment="viewStart"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonCopy"
+        tools:ignore="RtlCompat" />
+
+    <CheckBox
+        android:id="@+id/lowerCase_checkBox"
+        android:layout_width="132dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/lower_case_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_generate_title_tv" />
+
+    <CheckBox
+        android:id="@+id/upperCase_checkBox"
+        android:layout_width="132dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="44dp"
+        android:text="@string/upper_case_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lowerCase_checkBox" />
+
+    <CheckBox
+        android:id="@+id/numericValue_checkBox"
+        android:layout_width="132dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="44dp"
+        android:text="@string/numeric_value_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upperCase_checkBox" />
+
+    <CheckBox
+        android:id="@+id/special_chars_checkBox"
+        android:layout_width="132dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="44dp"
+        android:text="@string/special_chars_checkbox"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/numericValue_checkBox" />
+
+    <TextView
+        android:id="@+id/passwordSize_tv"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="16dp"
+        android:gravity="top|right"
+        android:text="@string/password_size"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/special_chars_checkBox"
+        tools:ignore="RtlCompat" />
+
+    <EditText
+        android:id="@+id/passwordSize_et"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="264dp"
+
+        android:gravity="bottom|center_vertical"
+        android:text=""
+        android:padding="5sp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/passwordSize_tv" />
+
+    <Button
+        android:id="@+id/buttonCopy"
+        android:layout_width="152dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginEnd="49dp"
+        android:backgroundTint="@color/king_blue"
+        android:text="@string/copy_btn"
+        app:layout_constraintEnd_toEndOf="@+id/password_generate_title_tv"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/password_generate_tv" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="152dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="4dp"
+        android:backgroundTint="@color/king_blue"
+        android:text="@string/save_btn"
+        app:layout_constraintBottom_toTopOf="@+id/password_generate_title_tv"
+        app:layout_constraintStart_toEndOf="@+id/buttonCopy"
+        app:layout_constraintTop_toBottomOf="@+id/password_generate_tv"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/buttonGenerate"
+        android:layout_width="324dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginBottom="208dp"
+        android:backgroundTint="@color/king_blue"
+        android:text="@string/generate_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordSize_tv"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
