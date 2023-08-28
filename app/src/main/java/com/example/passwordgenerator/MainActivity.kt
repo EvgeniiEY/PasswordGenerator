@@ -2,28 +2,42 @@ package com.example.passwordgenerator
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Button
 import android.widget.CheckBox
+import android.widget.EditText
+import android.widget.TextView
+import com.example.passwordgenerator.RandomNumberGenerator.generateRandomNumber
 
 class MainActivity : AppCompatActivity() {
+    var passwordLength: EditText? = null
+    var textPasswordGenerated: TextView? = null
+    var textErrorMessage: TextView? = null
+    var lowerCaseCheckBox: CheckBox? = null
+    var upperCaseCheckBox: CheckBox? = null
+    var numericValueCheckBox: CheckBox? = null
+    var specialCharsCheckBox: CheckBox? = null
+    var btnGenerate: Button? = null
+    var btnCopy: Button? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        var password: String
-        var passwordLength: String = "9"
-        var passwordAlphabet: String
-        var passwordNumbers: String
-        var passwordCharsIncluded: String
-        var passwordUppercase: String
-
-        password = generatePassword(
-            passwordLength,
-            passwordAlphabet,
-            passwordNumbers,
-            passwordCharsIncluded,
-            passwordUppercase
-        )
+        initViews()
     }
+
+    fun clickListeners() {
+        btnGenerate?.setOnClickListener {
+            val passwordSize: Int = passwordLength?.text.toString().toInt()
+            textErrorMessage?.text = ""
+            if (passwordSize < 8) {
+                textErrorMessage?.text = "Password must be greater than 8"
+                return@setOnClickListener
+            }
+        }
+
+    }
+
 
     fun generatePassword(
         passwordLength: String,
@@ -34,52 +48,36 @@ class MainActivity : AppCompatActivity() {
     ): String {
         var password: String = ""
         var testPassed: Boolean = true
-
         var alphabetRange = mutableListOf<Char>()
-
-        var alphabetSelected: Boolean = false
-        var uppercaseAlphabetSelected: Boolean = false
-        var numericValueSelected: Boolean = false
-        var specialCharsSelected: Boolean = false
-
         var numberRange = mutableListOf<Char>()
-
         var specialCharRange = mutableListOf<Char>()
-
-//        var additionalSpecialChars = passwordCharsIncluded.toCharArray()
         var defaultSpecialChars = "^!$%&/()=?+*#_<>".toCharArray()
 
-        val lowerCaseCheckBox = findViewById<CheckBox>(R.id.lowerCase_checkBox);
-        alphabetSelected = lowerCaseCheckBox.isChecked
-        if (alphabetSelected) for (lowerCaseChar in 'a'..'z') {
+        var alphabetSelected = lowerCaseCheckBox?.isChecked
+        if (alphabetSelected == true) for (lowerCaseChar in 'a'..'z') {
             alphabetRange.add(lowerCaseChar)
         }
-        val upperCaseCheckBox: CheckBox = findViewById(R.id.upperCase_checkBox);
-        uppercaseAlphabetSelected = upperCaseCheckBox.isChecked
-        if (uppercaseAlphabetSelected) for (upperCaseChar in 'A'..'Z') {
+        var uppercaseAlphabetSelected = upperCaseCheckBox?.isChecked
+        if (uppercaseAlphabetSelected == true) for (upperCaseChar in 'A'..'Z') {
             alphabetRange.add(upperCaseChar)
         }
         alphabetRange.shuffle()
 
-
-        val numericValueCheckBox: CheckBox = findViewById(R.id.numericValue_checkBox);
-        numericValueSelected = numericValueCheckBox.isChecked
-        if (numericValueSelected) for (numbers in '0'..'9') {
+        var numericValueSelected = numericValueCheckBox?.isChecked
+        if (numericValueSelected == true) for (numbers in '0'..'9') {
             numberRange.add(numbers)
         }
         numberRange.shuffle()
 
-
-        val specialCharsCheckBox: CheckBox = findViewById(R.id.special_chars_checkBox);
-        specialCharsSelected = specialCharsCheckBox.isChecked
-        if (specialCharsSelected) for (chars in defaultSpecialChars) {
+        var specialCharsSelected = specialCharsCheckBox?.isChecked
+        if (specialCharsSelected == true) for (chars in defaultSpecialChars) {
             specialCharRange.add(chars)
         }
         specialCharRange.shuffle()
 
         var counter1: Byte = 0
         while (counter1 < passwordLength.toByte()) {
-            if (alphabetSelected && numericValueSelected) {
+            if (alphabetSelected == true && numericValueSelected == true) {
                 var randomRange = generateRandomNumber(0, 1)
                 if (randomRange == 0) {
                     var randomIndex = generateRandomNumber(0, alphabetRange.size - 1)
@@ -88,10 +86,10 @@ class MainActivity : AppCompatActivity() {
                     var randomIndex = generateRandomNumber(0, numberRange.size - 1)
                     password += numberRange[randomIndex]
                 }
-            } else if (alphabetSelected) {
+            } else if (alphabetSelected == true) {
                 var randomIndex = generateRandomNumber(0, alphabetRange.size - 1)
                 password += alphabetRange[randomIndex]
-            } else if (numericValueSelected) {
+            } else if (numericValueSelected == true) {
                 var randomIndex = generateRandomNumber(0, numberRange.size - 1)
                 password += numberRange[randomIndex]
             }
@@ -117,36 +115,45 @@ class MainActivity : AppCompatActivity() {
             }
             password = String(tempPassword)
         }
-        if (alphabetSelected) {
+        if (alphabetSelected == true) {
             val regex = Regex("[a-z]")
             if (!regex.containsMatchIn(password)) {
                 testPassed = false
             }
         }
 
-        if (uppercaseAlphabetSelected) {
+        if (uppercaseAlphabetSelected == true) {
             val regex = Regex("[A-Z]")
             if (!regex.containsMatchIn(password)) {
                 testPassed = false
             }
         }
 
-        if (numericValueSelected) {
+        if (numericValueSelected == true) {
             val regex = Regex("[0-9]")
             if (!regex.containsMatchIn(password)) {
                 testPassed = false
             }
         }
 
-        if (testPassed) {
-            return password
+        return if (testPassed) {
+            password
         } else {
-            return "Error!"
+            "Error!"
         }
     }
 
-}
+    private fun initViews() {
 
-private fun generateRandomNumber(startValue: Int, endValue: Int): Int {
-    return (startValue..endValue).random()
+        passwordLength = findViewById(R.id.passwordSize_et)
+        textPasswordGenerated = findViewById(R.id.password_generated_tv)
+        textErrorMessage = findViewById(R.id.error_tv)
+        lowerCaseCheckBox = findViewById(R.id.lowerCase_checkBox)
+        upperCaseCheckBox = findViewById(R.id.upperCase_checkBox)
+        numericValueCheckBox = findViewById(R.id.numericValue_checkBox)
+        specialCharsCheckBox = findViewById(R.id.special_chars_checkBox)
+        btnGenerate = findViewById(R.id.buttonGenerate)
+        btnCopy = findViewById(R.id.buttonCopy)
+
+    }
 }

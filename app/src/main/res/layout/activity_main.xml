@@ -7,7 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/password_generate_tv"
+        android:id="@+id/password_generated_tv"
         android:layout_width="324dp"
         android:layout_height="31dp"
         android:layout_marginStart="44dp"
@@ -91,7 +91,7 @@
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginBottom="264dp"
-
+        android:inputType="numberDecimal"
         android:gravity="bottom|center_vertical"
         android:text=""
         android:padding="10sp"
@@ -111,7 +111,7 @@
         app:layout_constraintEnd_toEndOf="@+id/password_generate_title_tv"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_generate_tv" />
+        app:layout_constraintTop_toBottomOf="@+id/password_generated_tv" />
 
     <Button
         android:id="@+id/buttonSave"
@@ -123,19 +123,33 @@
         android:text="@string/save_btn"
         app:layout_constraintBottom_toTopOf="@+id/password_generate_title_tv"
         app:layout_constraintStart_toEndOf="@+id/buttonCopy"
-        app:layout_constraintTop_toBottomOf="@+id/password_generate_tv"
+        app:layout_constraintTop_toBottomOf="@+id/password_generated_tv"
         app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+        android:id="@+id/error_tv"
+        android:layout_width="200dp"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:inputType="numberDecimal"
+        android:padding="10sp"
+        android:textColor="@color/red_error"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGenerate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/passwordSize_et" />
 
     <Button
         android:id="@+id/buttonGenerate"
         android:layout_width="324dp"
         android:layout_height="48dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="208dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginBottom="168dp"
         android:backgroundTint="@color/king_blue"
         android:text="@string/generate_btn"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/passwordSize_tv"
         app:layout_constraintStart_toStartOf="parent" />
 
 

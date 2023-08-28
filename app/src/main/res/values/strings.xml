@@ -2,6 +2,8 @@
     <string name="app_name">PasswordGenerator</string>
     <string name="app_name_splash_title">Password Generator</string>
     <string name="generate_tv">Click on Generate button</string>
+    <string name="error_tv">ERROR !!!</string>
+    <string name="shortPassword">Password must be greater than 8 !!!</string>
     <string name="copy_btn">COPY</string>
     <string name="save_btn">SAVE</string>
     <string name="choose_the_password_content">Chose the password Content:</string>
