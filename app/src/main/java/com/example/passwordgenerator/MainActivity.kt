@@ -1,13 +1,13 @@
 package com.example.passwordgenerator
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ClipboardManager
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
-import com.example.passwordgenerator.RandomNumberGenerator.generateRandomNumber
+import androidx.appcompat.app.AppCompatActivity
+import com.example.passwordgenerator.PasswordGenerator.Companion.generators
 
 class MainActivity : AppCompatActivity() {
     var passwordLength: EditText? = null
@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         initViews()
+        clickListeners()
+
     }
 
     fun clickListeners() {
@@ -34,112 +36,31 @@ class MainActivity : AppCompatActivity() {
                 textErrorMessage?.text = "Password must be greater than 8"
                 return@setOnClickListener
             }
-        }
+            // todo разобраться с наследованием и композицией
 
-    }
+            generators.clear()
+            if (lowerCaseCheckBox?.isChecked() == true) PasswordGenerator.add(LowerCaseGenerator())
+            if (upperCaseCheckBox?.isChecked() == true) PasswordGenerator.add(UpperCaseGenerator())
+            if (numericValueCheckBox?.isChecked() == true) PasswordGenerator.add(
+                NumericCaseGenerator()
+            )
+            if (specialCharsCheckBox?.isChecked() == true) PasswordGenerator.add(
+                SpecialCharGenerator()
+            )
 
-
-    fun generatePassword(
-        passwordLength: String,
-        passwordAlphabet: String,
-        passwordNumbers: String,
-        passwordCharsIncluded: String,
-        passwordUppercase: String
-    ): String {
-        var password: String = ""
-        var testPassed: Boolean = true
-        var alphabetRange = mutableListOf<Char>()
-        var numberRange = mutableListOf<Char>()
-        var specialCharRange = mutableListOf<Char>()
-        var defaultSpecialChars = "^!$%&/()=?+*#_<>".toCharArray()
-
-        var alphabetSelected = lowerCaseCheckBox?.isChecked
-        if (alphabetSelected == true) for (lowerCaseChar in 'a'..'z') {
-            alphabetRange.add(lowerCaseChar)
-        }
-        var uppercaseAlphabetSelected = upperCaseCheckBox?.isChecked
-        if (uppercaseAlphabetSelected == true) for (upperCaseChar in 'A'..'Z') {
-            alphabetRange.add(upperCaseChar)
-        }
-        alphabetRange.shuffle()
-
-        var numericValueSelected = numericValueCheckBox?.isChecked
-        if (numericValueSelected == true) for (numbers in '0'..'9') {
-            numberRange.add(numbers)
-        }
-        numberRange.shuffle()
-
-        var specialCharsSelected = specialCharsCheckBox?.isChecked
-        if (specialCharsSelected == true) for (chars in defaultSpecialChars) {
-            specialCharRange.add(chars)
-        }
-        specialCharRange.shuffle()
-
-        var counter1: Byte = 0
-        while (counter1 < passwordLength.toByte()) {
-            if (alphabetSelected == true && numericValueSelected == true) {
-                var randomRange = generateRandomNumber(0, 1)
-                if (randomRange == 0) {
-                    var randomIndex = generateRandomNumber(0, alphabetRange.size - 1)
-                    password += alphabetRange[randomIndex]
-                } else if (randomRange == 1) {
-                    var randomIndex = generateRandomNumber(0, numberRange.size - 1)
-                    password += numberRange[randomIndex]
-                }
-            } else if (alphabetSelected == true) {
-                var randomIndex = generateRandomNumber(0, alphabetRange.size - 1)
-                password += alphabetRange[randomIndex]
-            } else if (numericValueSelected == true) {
-                var randomIndex = generateRandomNumber(0, numberRange.size - 1)
-                password += numberRange[randomIndex]
+            if (generators.isEmpty()) {
+                textErrorMessage?.text = "Please select at least one password content type"
+                return@setOnClickListener
             }
-            counter1++
-        }
 
-        if (passwordCharsIncluded.isNotBlank()) {
-            var tempPassword = password.toCharArray()
-            for (i in tempPassword.indices) {
-                if (passwordLength.toShort() < 10) {
-                    var randomNum = generateRandomNumber(0, 2)
-                    if (randomNum > 1) {
-                        var randomIndex = generateRandomNumber(0, specialCharRange.size - 1)
-                        tempPassword[i] = specialCharRange[randomIndex]
-                    }
-                } else if (passwordLength.toShort() > 10) {
-                    var randomNum = generateRandomNumber(0, 3)
-                    if (randomNum > 1) {
-                        var randomIndex = generateRandomNumber(0, specialCharRange.size - 1)
-                        tempPassword[i] = specialCharRange[randomIndex]
-                    }
-                }
-            }
-            password = String(tempPassword)
-        }
-        if (alphabetSelected == true) {
-            val regex = Regex("[a-z]")
-            if (!regex.containsMatchIn(password)) {
-                testPassed = false
-            }
-        }
+            var password = PasswordGenerator.generatePassword(passwordSize)
+            textPasswordGenerated?.text = password
 
-        if (uppercaseAlphabetSelected == true) {
-            val regex = Regex("[A-Z]")
-            if (!regex.containsMatchIn(password)) {
-                testPassed = false
-            }
-        }
-
-        if (numericValueSelected == true) {
-            val regex = Regex("[0-9]")
-            if (!regex.containsMatchIn(password)) {
-                testPassed = false
-            }
-        }
-
-        return if (testPassed) {
-            password
-        } else {
-            "Error!"
+//           TODO: btnCopy?.setOnClickListener{
+//               var manager: ClipboardManager =
+//
+//
+//            }
         }
     }
 
@@ -157,3 +78,100 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+//    private fun generatePassword(passwordLength: Int): String {
+//        var password = ""
+//        var testPassed = true
+//        var alphabetRange = mutableListOf<Char>()
+//        var numberRange = mutableListOf<Char>()
+//        var specialCharRange = mutableListOf<Char>()
+//        var defaultSpecialChars = "^!$%&/()=?+*#_<>".toCharArray()
+//
+//        var alphabetSelected = lowerCaseCheckBox?.isChecked
+//        if (alphabetSelected == true) for (lowerCaseChar in 'a'..'z') {
+//            alphabetRange.add(lowerCaseChar)
+//        }
+//        var uppercaseAlphabetSelected = upperCaseCheckBox?.isChecked
+//        if (uppercaseAlphabetSelected == true) for (upperCaseChar in 'A'..'Z') {
+//            alphabetRange.add(upperCaseChar)
+//        }
+//        alphabetRange.shuffle()
+//
+//        var numericValueSelected = numericValueCheckBox?.isChecked
+//        if (numericValueSelected == true) for (numbers in '0'..'9') {
+//            numberRange.add(numbers)
+//        }
+//        numberRange.shuffle()
+//
+//        var specialCharsSelected = specialCharsCheckBox?.isChecked
+//        if (specialCharsSelected == true) for (chars in defaultSpecialChars) {
+//            specialCharRange.add(chars)
+//        }
+//        specialCharRange.shuffle()
+//
+//        var counter1: Byte = 0
+//        while (counter1 < passwordLength) {
+//            if (alphabetSelected == true && numericValueSelected == true) {
+//                var randomRange = generateRandomNumber(0, 1)
+//                if (randomRange == 0) {
+//                    var randomIndex = generateRandomNumber(0, alphabetRange.size - 1)
+//                    password += alphabetRange[randomIndex]
+//                } else if (randomRange == 1) {
+//                    var randomIndex = generateRandomNumber(0, numberRange.size - 1)
+//                    password += numberRange[randomIndex]
+//                }
+//            } else if (alphabetSelected == true) {
+//                var randomIndex = generateRandomNumber(0, alphabetRange.size - 1)
+//                password += alphabetRange[randomIndex]
+//            } else if (numericValueSelected == true) {
+//                var randomIndex = generateRandomNumber(0, numberRange.size - 1)
+//                password += numberRange[randomIndex]
+//            }
+//            counter1++
+//        }
+//
+//        if (specialCharsCheckBox?.isChecked == true) {
+//            var tempPassword = password.toCharArray()
+//            for (i in tempPassword.indices) {
+//                if (passwordLength.toShort() < 10) {
+//                    var randomNum = generateRandomNumber(0, 2)
+//                    if (randomNum > 1) {
+//                        var randomIndex = generateRandomNumber(0, specialCharRange.size - 1)
+//                        tempPassword[i] = specialCharRange[randomIndex]
+//                    }
+//                } else if (passwordLength.toShort() > 10) {
+//                    var randomNum = generateRandomNumber(0, 3)
+//                    if (randomNum > 1) {
+//                        var randomIndex = generateRandomNumber(0, specialCharRange.size - 1)
+//                        tempPassword[i] = specialCharRange[randomIndex]
+//                    }
+//                }
+//            }
+//            password = String(tempPassword)
+//        }
+//        if (alphabetSelected == true) {
+//            val regex = Regex("[a-z]")
+//            if (!regex.containsMatchIn(password)) {
+//                testPassed = false
+//            }
+//        }
+//
+//        if (uppercaseAlphabetSelected == true) {
+//            val regex = Regex("[A-Z]")
+//            if (!regex.containsMatchIn(password)) {
+//                testPassed = false
+//            }
+//        }
+//
+//        if (numericValueSelected == true) {
+//            val regex = Regex("[0-9]")
+//            if (!regex.containsMatchIn(password)) {
+//                testPassed = false
+//            }
+//        }
+//
+//        return if (testPassed) {
+//            password
+//        } else "Error!"
+//
+//        textPasswordGenerated?.text = password
+//    }
