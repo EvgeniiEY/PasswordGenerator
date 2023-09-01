@@ -1,6 +1,5 @@
 package com.example.passwordgenerator
 
-import android.content.ClipboardManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.CheckBox
@@ -8,9 +7,14 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.passwordgenerator.PasswordGenerator.Companion.generators
+import com.example.passwordgenerator.generators.LowerCaseGenerator
+import com.example.passwordgenerator.generators.NumericCaseGenerator
+import com.example.passwordgenerator.generators.SpecialCharGenerator
+import com.example.passwordgenerator.generators.UpperCaseGenerator
 
 class MainActivity : AppCompatActivity() {
     var passwordLength: EditText? = null
+    var passwordlength = passwordLength?.text
     var textPasswordGenerated: TextView? = null
     var textErrorMessage: TextView? = null
     var lowerCaseCheckBox: CheckBox? = null
@@ -30,28 +34,38 @@ class MainActivity : AppCompatActivity() {
 
     fun clickListeners() {
         btnGenerate?.setOnClickListener {
+
+
+            if (passwordLength?.text?.isEmpty() == true) {
+                textErrorMessage?.text = getString(R.string.emptyPassword)
+                return@setOnClickListener
+            }
             val passwordSize: Int = passwordLength?.text.toString().toInt()
+
+
+
             textErrorMessage?.text = ""
             if (passwordSize < 8) {
-                textErrorMessage?.text = "Password must be greater than 8"
+                textErrorMessage?.text = getString(R.string.shortPassword)
                 return@setOnClickListener
             }
             // todo разобраться с наследованием и композицией
 
             generators.clear()
-            if (lowerCaseCheckBox?.isChecked() == true) PasswordGenerator.add(LowerCaseGenerator())
-            if (upperCaseCheckBox?.isChecked() == true) PasswordGenerator.add(UpperCaseGenerator())
-            if (numericValueCheckBox?.isChecked() == true) PasswordGenerator.add(
+            if (lowerCaseCheckBox?.isChecked == true) PasswordGenerator.add(LowerCaseGenerator())
+            if (upperCaseCheckBox?.isChecked == true) PasswordGenerator.add(UpperCaseGenerator())
+            if (numericValueCheckBox?.isChecked == true) PasswordGenerator.add(
                 NumericCaseGenerator()
             )
-            if (specialCharsCheckBox?.isChecked() == true) PasswordGenerator.add(
+            if (specialCharsCheckBox?.isChecked == true) PasswordGenerator.add(
                 SpecialCharGenerator()
             )
 
             if (generators.isEmpty()) {
-                textErrorMessage?.text = "Please select at least one password content type"
+                textErrorMessage?.text = getString(R.string.emptyCheckBoxes)
                 return@setOnClickListener
             }
+
 
             var password = PasswordGenerator.generatePassword(passwordSize)
             textPasswordGenerated?.text = password
