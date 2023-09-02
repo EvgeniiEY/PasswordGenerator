@@ -1,10 +1,10 @@
 package com.example.passwordgenerator
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.os.Bundle
-import android.widget.Button
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.TextView
+import android.view.View
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.passwordgenerator.PasswordGenerator.Companion.generators
 import com.example.passwordgenerator.generators.LowerCaseGenerator
@@ -76,6 +76,19 @@ class MainActivity : AppCompatActivity() {
 //
 //            }
         }
+        btnCopy?.setOnClickListener {
+            val manager =
+                getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            manager.setPrimaryClip(
+                ClipData.newPlainText(
+                    "password",
+                    textPasswordGenerated?.text.toString()
+                )
+            )
+            Toast.makeText(this, "Password Copied", Toast.LENGTH_SHORT).show()
+        }
+
+
     }
 
     private fun initViews() {
