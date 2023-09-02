@@ -5,7 +5,7 @@
     <string name="error_tv">ERROR !!!</string>
     <string name="shortPassword">Password must be greater than 8!</string>
     <string name="emptyPassword">Please type a length of password!</string>
-    <string name="emptyCheckBoxes">Please select at least one password content type!</string>
+    <string name="emptyCheckBoxes">Please select at least \none password content type!</string>
     <string name="zeroPassword">Enter Password length!</string>
     <string name="copy_btn">COPY</string>
     <string name="save_btn">SAVE</string>

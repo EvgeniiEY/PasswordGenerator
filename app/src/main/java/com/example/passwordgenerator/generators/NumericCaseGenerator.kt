@@ -13,7 +13,7 @@ class NumericCaseGenerator : PasswordGenerator() {
 
 
     override fun getChar(): String {
-        return RandomGenerator.randomChar(CHAR_0.code, CHAR_9.code).toString()
+        return RandomGenerator.randomChar(CHAR_0.code, CHAR_9.code).toChar().toString()
 
     }
 }
