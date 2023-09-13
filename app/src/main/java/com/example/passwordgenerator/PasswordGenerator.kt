@@ -1,6 +1,7 @@
 package com.example.passwordgenerator
 
 import com.example.passwordgenerator.generators.LowerCaseGenerator
+import com.example.passwordgenerator.generators.RandomGenerator
 
 abstract class PasswordGenerator {
 

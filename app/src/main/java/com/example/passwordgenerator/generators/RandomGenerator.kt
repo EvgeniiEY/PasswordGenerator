@@ -1,4 +1,4 @@
-package com.example.passwordgenerator
+package com.example.passwordgenerator.generators
 
 class RandomGenerator {
 

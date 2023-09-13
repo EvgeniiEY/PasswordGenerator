@@ -9,6 +9,7 @@
     <string name="zeroPassword">Enter Password length!</string>
     <string name="copy_btn">COPY</string>
     <string name="save_btn">SAVE</string>
+    <string name="back_btn">Back to generate</string>
     <string name="choose_the_password_content">Chose the password Content:</string>
     <string name="lower_case_checkbox">Lower Case</string>
     <string name="upper_case_checkbox">Upper Case</string>
