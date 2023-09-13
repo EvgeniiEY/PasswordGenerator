@@ -8,7 +8,8 @@
     <string name="emptyCheckBoxes">Please select at least \none password content type!</string>
     <string name="zeroPassword">Enter Password length!</string>
     <string name="copy_btn">COPY</string>
-    <string name="save_btn">SAVE</string>
+    <string name="save_btn">SAVE TO DB</string>
+    <string name="open_db_btn">Open data base</string>
     <string name="back_btn">Back to generate</string>
     <string name="choose_the_password_content">Chose the password Content:</string>
     <string name="lower_case_checkbox">Lower Case</string>

@@ -2,11 +2,12 @@ package com.example.passwordgenerator
 
 import android.content.ClipData
 import android.content.ClipboardManager
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.passwordgenerator.PasswordGenerator.Companion.generators
+import com.example.passwordgenerator.db.MyDbManager
 import com.example.passwordgenerator.generators.LowerCaseGenerator
 import com.example.passwordgenerator.generators.NumericCaseGenerator
 import com.example.passwordgenerator.generators.SpecialCharGenerator
@@ -14,7 +15,8 @@ import com.example.passwordgenerator.generators.UpperCaseGenerator
 
 class MainActivity : AppCompatActivity() {
     var passwordLength: EditText? = null
-    var passwordlength = passwordLength?.text
+
+    //    var passwordlength = passwordLength?.text
     var textPasswordGenerated: TextView? = null
     var textErrorMessage: TextView? = null
     var lowerCaseCheckBox: CheckBox? = null
@@ -23,6 +25,8 @@ class MainActivity : AppCompatActivity() {
     var specialCharsCheckBox: CheckBox? = null
     var btnGenerate: Button? = null
     var btnCopy: Button? = null
+    var btnToDb: Button? = null
+    val myDbManager = MyDbManager(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,12 +74,8 @@ class MainActivity : AppCompatActivity() {
             var password = PasswordGenerator.generatePassword(passwordSize)
             textPasswordGenerated?.text = password
 
-//           TODO: btnCopy?.setOnClickListener{
-//               var manager: ClipboardManager =
-//
-//
-//            }
         }
+        //todo: btnCopy не копирует в буфер --> сделать
         btnCopy?.setOnClickListener {
             val manager =
                 getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
@@ -87,8 +87,11 @@ class MainActivity : AppCompatActivity() {
             )
             Toast.makeText(this, "Password Copied", Toast.LENGTH_SHORT).show()
         }
+        btnToDb?.setOnClickListener {
+            val intent = Intent(this, PswDbActivity::class.java)
+            startActivity(intent)
 
-
+        }
     }
 
     private fun initViews() {
@@ -102,8 +105,11 @@ class MainActivity : AppCompatActivity() {
         specialCharsCheckBox = findViewById(R.id.special_chars_checkBox)
         btnGenerate = findViewById(R.id.buttonGenerate)
         btnCopy = findViewById(R.id.buttonCopy)
+        btnToDb = findViewById(R.id.buttonToDb)
 
     }
+
+
 }
 //    private fun generatePassword(passwordLength: Int): String {
 //        var password = ""
