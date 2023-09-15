@@ -16,6 +16,8 @@
         android:layout_marginBottom="16dp"
         android:ems="10"
         android:foregroundGravity="top"
+        android:gravity="top"
+        android:text=""
         android:inputType="textMultiLine|textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/buttonBackToGenerate"
         app:layout_constraintEnd_toEndOf="parent"

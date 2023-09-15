@@ -15,7 +15,6 @@ import com.example.passwordgenerator.generators.UpperCaseGenerator
 
 class MainActivity : AppCompatActivity() {
     var passwordLength: EditText? = null
-
     //    var passwordlength = passwordLength?.text
     var textPasswordGenerated: TextView? = null
     var textErrorMessage: TextView? = null
@@ -27,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     var btnCopy: Button? = null
     var btnToDb: Button? = null
     val myDbManager = MyDbManager(this)
+    var tvDbText: TextView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +37,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun clickListeners() {
+
+
         btnGenerate?.setOnClickListener {
 
 
@@ -74,6 +76,14 @@ class MainActivity : AppCompatActivity() {
             var password = PasswordGenerator.generatePassword(passwordSize)
             textPasswordGenerated?.text = password
 
+            tvDbText?.text = ""
+            myDbManager.openDb()
+            myDbManager.insertToDb(textPasswordGenerated?.text.toString())
+            val dataList = myDbManager.readDbData()
+            for(item in dataList)
+            tvDbText?.append(item)
+            tvDbText?.append("\n")
+
         }
         //todo: btnCopy не копирует в буфер --> сделать
         btnCopy?.setOnClickListener {
@@ -106,7 +116,13 @@ class MainActivity : AppCompatActivity() {
         btnGenerate = findViewById(R.id.buttonGenerate)
         btnCopy = findViewById(R.id.buttonCopy)
         btnToDb = findViewById(R.id.buttonToDb)
+        tvDbText = findViewById(R.id.tv_dbOfPasswords)
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        myDbManager.closeDb()
     }
 
 

@@ -12,9 +12,9 @@ class MyDbManager(context: Context) {
         db = myDbHelper.writableDatabase
     }
 
-    fun insertToDb(title: String, content: String) {
+    fun insertToDb(content: String) {
         val values = ContentValues().apply {
-            put(MyDbNameClass.COLUMN_NAME_TITLE, title)
+
             put(MyDbNameClass.COLUMN_NAME_CONTENT, content)
         }
         db?.insert(MyDbNameClass.TABLE_NAME, null, values)
